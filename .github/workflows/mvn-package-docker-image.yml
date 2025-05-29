@@ -1,7 +1,12 @@
 name: package and make image CI
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - master  # 仅 main 分支的提交会触发此工作流
+  pull_request:
+    branches:
+      - master  # 针对 main 分支的 PR 也会触发，用于预检查
 
 jobs:
   build:
