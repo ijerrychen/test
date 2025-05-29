@@ -38,15 +38,15 @@ jobs:
       run: echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
 
     - name: Build Docker image
-      run: docker build . -t chenjie1984/rt_fraud_detect:latest
+      run: docker build . -t chenjie1984/real-time-fraud-detection:latest
 
 
     - name: Push Docker image to Docker Hub
-      run: docker push chenjie1984/rt_fraud_detect:latest
+      run: docker push chenjie1984/real-time-fraud-detection:latest
 
     - name: Tag Docker image
-      run: docker tag chenjie1984/rt_fraud_detect:latest chenjie1984/rt_fraud_detect:${{ github.sha }}
+      run: docker tag chenjie1984/real-time-fraud-detection:latest chenjie1984/real-time-fraud-detection:${{ github.sha }}
 
 
     - name: Push Docker image with tag
-      run: docker push chenjie1984/rt_fraud_detect:${{ github.sha }}
+      run: docker push chenjie1984/real-time-fraud-detection:${{ github.sha }}

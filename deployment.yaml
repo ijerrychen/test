@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: fraud-detection
-          image: chenjie1984/rt_fraud_detect:latest
+          image: chenjie1984/real-time-fraud-detection:latest
           ports:
             - containerPort: 8080
           env:
