@@ -1,23 +1,30 @@
-name: package and make image CI
+name: Fraud Detection System CI/CD Pipeline
 
 on:
   push:
     branches:
-      - master  # 仅 main 分支的提交会触发此工作流
+      - develop
+      - release/*
+      - hotfix/*
+      - master
   pull_request:
     branches:
-      - master  # 针对 main 分支的 PR 也会触发，用于预检查
+      - develop
+      - master
+env:
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    environment: DOCKER_USERNAME
+    environment: Development
     steps:
     - name: Checkout repository
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up JDK 21
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v4
       with:
         java-version: '21'
         distribution: 'adopt'
@@ -28,9 +35,6 @@ jobs:
       run: mvn clean package
 
     - name: Log in to Docker Hub
-      env: 
-        DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
       run: echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
 
     - name: Build Docker image
